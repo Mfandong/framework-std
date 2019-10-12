@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+        default-autowire="byType">
+    <!-- 配置bean -->
+
+	<!-- <context:component-scan base-package="std1"></context:component-scan> -->
+	
+	<bean id="aopXmlDaoImpl" class="std1.dao.impl.AopXmlDaoImpl">
+		<constructor-arg name="aa" ref="aa"></constructor-arg>
+		<constructor-arg name="bb" ref="bb"></constructor-arg>
+	</bean>
+	
+	<bean id="aopXml" class="std1.aop.AopXml"></bean>
+	
+	<aop:config>
+		<!-- <aop:pointcut expression="execution(* std1.dao.impl.*.*(..))" id="pointCutExe"/> -->
+		<aop:pointcut expression="@annotation(std1.annotation.AopAnnotation)" id="pano"/>
+		<aop:aspect ref="aopXml">
+			<!-- <aop:before method="before" pointcut-ref="pointCutExe"/> -->
+			<!-- <aop:after method="after" pointcut="@annotation(std1.annotation.AopAnnotation)"/> -->
+			<aop:around method="around" pointcut="@annotation(anno)" arg-names="anno"/>
+			<aop:after-returning method="ret" pointcut="execution(* std1.dao.AopDao.ret())" returning="retResult"/>
+		</aop:aspect>
+	</aop:config>	
+</beans>

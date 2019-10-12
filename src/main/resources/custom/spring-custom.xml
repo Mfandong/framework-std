@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byType">
+	<bean id="indexDao" class="org.std.framework.dao.impl.IndexDaoImpl"></bean>
+	<bean id="userDao" class="org.std.framework.dao.impl.UserDaoImpl"></bean>
+	<!-- <bean id="indexDao2" class="org.std.framework.dao.impl.IndexDaoImpl2"></bean> -->
+	<bean id="indexService" class="org.std.framework.service.impl.IndexServiceImpl">
+		<!-- <property name="indexDao" ref="indexDao"></property> -->
+	</bean>
+	<bean id="commonService" class="org.std.framework.service.impl.CommonServiceImpl">
+		<constructor-arg name="userDao" ref="userDao"></constructor-arg>
+		<constructor-arg name="indexDao" ref="indexDao"></constructor-arg>
+	</bean>
+</beans>
